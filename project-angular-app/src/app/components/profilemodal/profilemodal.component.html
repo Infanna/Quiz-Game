@@ -1,0 +1,99 @@
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">My profile</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" *ngIf="!show">
+
+                <img [src]="currentProfile.picture" class="img-thumbnail" alt="Your Image">
+                <p>Username: {{currentProfile.username}}</p>
+                <p>{{currentProfile.title+". "+currentProfile.name}}</p>
+                <p>Sex: {{currentProfile.sex}}</p>
+                <p>Email: {{currentProfile.email}}</p> 
+                <p>Tel: {{currentProfile.phonenumber}}</p> 
+                <p>{{2022-currentProfile.birthyear}} years old</p>
+                
+            </div>
+
+            <div class="modal-body" *ngIf="show">
+
+                <img [src]="currentProfile.picture" class="img-thumbnail" alt="Your Image">
+                <form [formGroup]="profileForm">
+                    <p>* blank input = same data</p>
+                    <div class="form-group">
+                        <label for="">Title</label>
+                        <select class="form-control" formControlName='title'>
+                            <option value=""></option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Miss">Miss</option>
+                            <option value="Ms">Ms</option>
+                        </select>
+                    </div>   
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" formControlName='name'>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-label" type="radio" name="sex" value="Male" formControlName='sex'>Male
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-label" type="radio" name="sex" value="Female" formControlName='sex'>Female
+                    </label>
+                </div>
+                <br/><br/>
+
+                <div class="form-group">
+                    <label>Birthyear</label>
+                    <input type="text" class="form-control" formControlName='birthyear'>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" class="form-control" formControlName='phonenumber'>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" formControlName='email'>
+                    
+                </div>
+            </form>
+            </div>
+            
+            <div class="modal-body">
+                <div>
+                    <button type="button" class="btn btn-primary btn-md float-right"
+                 (click)="onClickEdit()"> {{show? 'cancle':'edit profile'}}</button>
+                </div>
+                
+                 <div *ngIf="show">
+                    <button type="button" class="btn btn-primary btn-md float-right"
+                     (click)="onClickUpdate()"> save </button>
+    
+                </div>
+            </div>
+            <div class="modal-body">
+            <button type="button" class="btn btn-danger btn-md float-right"
+                     (click)="onClickDelete()"> delete your profile </button>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" (click)=onClickLogout() class="btn btn-secondary" data-dismiss="modal">Logout</button>
+            </div>
+
+        </div>
+    </div>
+</div>

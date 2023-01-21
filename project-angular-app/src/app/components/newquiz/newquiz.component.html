@@ -1,0 +1,226 @@
+<div class="card" style="background-color: black;">
+    <div class="card-body" style="width: 80%;height: auto; margin: auto;">
+        <div class="row">
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-header">
+                        Create Quiz
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="productForm">
+                            <div class="row">
+                                <div class="col-lg-12 text-center" style="margin-bottom: 50px;">
+                                    <img [src]="this.productForm.value.img || 'https://cdn.discordapp.com/attachments/1026870373700083732/1029786860471464026/Group_26.png'"
+                                        style="height:250px;">
+                                </div>
+                                <div class="col-lg-2">Quiz Name :</div>
+                                <div class="col-lg-4 text-left">
+                                    <div class="form-group">
+                                        <input type="string" class="form-control" formControlName='quizName'
+                                            maxlength="250">
+                                        <div *ngIf="quizName?.invalid && (quizName?.dirty || quizName?.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="quizName?.errors?.['required']">
+                                                Quiz is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">Quiz Picture :</div>
+                                <div class="col-lg-4 text-left">
+                                    <input type="file" class="form-control-file" (change)="onChangeImg($event)">
+                                </div>
+                            </div>
+                        </form>
+                        <div [ngSwitch]="statusButton">
+                            <button type="button" class="btn btn-info btn-lg" (click)="addQuiz()" *ngSwitchCase="1"
+                                style="margin-right: 20px;">Add Question {{(productForm.value.quiz).length+1}}
+                                <i class="fa fa-arrow-down btn-md" aria-hidden="true"
+                                    style="margin-left:2px"></i></button>
+                            <button type="button" class="btn btn-warning btn-lg" (click)="pay()" *ngSwitchCase="2"
+                                style="margin-right: 20px;">Get premium to add more question
+                                <i class="fa fa-arrow-down btn-md" aria-hidden="true"
+                                    style="margin-left:2px"></i></button>
+                            <button type="button" class="btn btn-dark btn-lg" (click)="addQuiz()" *ngSwitchCase="3"
+                                style="margin-right: 20px;"><i class="fa fa-product-hunt" aria-hidden="true"></i> Add
+                                Question {{(productForm.value.quiz).length+1}}
+                                <i class="fa fa-arrow-down btn-md" aria-hidden="true"
+                                    style="margin-left:2px"></i></button>
+                        </div>
+                        <div class="card" style="margin: 100px 0 0 0;">
+
+                            <!-- <div class="card-header">Tool Display</div>
+                            <div class="row" style="padding: 5px;">
+                                <div class="col-lg-2"><i class="fa fa-address-book" aria-hidden="true"></i> Json:</div>
+                                <div class="col-lg-10 text-left">
+                                    <div class="form-group">
+                                        <label for="comment">{{productForm.value|json}} </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding: 5px;">
+                                <div class="col-lg-2"><i class="fa fa-address-book" aria-hidden="true"></i>
+                                    Test:</div> {{productForm.status}}
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="productForm">
+            <div formArrayName="quiz">
+                <div class="form-group" *ngFor="let line of quiz.controls; let i_quiz=index">
+                    <div [formGroupName]="i_quiz">
+                        <div class="card" style="background-color: black; margin-top: 100px;">
+                            <div class="d-flex justify-content-center" style="color: white; font-size: 60px;">
+                                Question : {{i_quiz+1}}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Create Question {{i_quiz+1}}
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row" style="padding: 5px;">
+                                                <div class="col-lg-2"> Question :</div>
+                                                <div class="col-lg-4 text-left">
+                                                    <div class="form-group">
+                                                        <input type="string" class="form-control"
+                                                            formControlName='question' maxlength="250">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row" style="padding: 5px;">
+                                                <div class="col-lg-2"> Choice 1 :</div>
+                                                <div class="col-lg-4 text-left">
+                                                    <div class="form-group">
+                                                        <input type="string" class="form-control"
+                                                            formControlName='choice1' maxlength="140">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2"> Choice 2 :</div>
+                                                <div class="col-lg-4 text-left">
+                                                    <div class="form-group">
+                                                        <input type="string" class="form-control"
+                                                            formControlName='choice2' maxlength="140">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" style="padding: 5px;">
+                                                <div class="col-lg-2"> Choice 3 :</div>
+                                                <div class="col-lg-4 text-left">
+                                                    <div class="form-group">
+                                                        <input type="string" class="form-control"
+                                                            formControlName='choice3' maxlength="140">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2"> Choice 4 :</div>
+                                                <div class="col-lg-4 text-left">
+                                                    <div class="form-group">
+                                                        <input type="string" class="form-control"
+                                                            formControlName='choice4' maxlength="140">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" style="padding: 5px;">
+                                                <div class="col-lg-2"> Answer :</div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group" style="font-size: 20px;">
+                                                        <fieldset class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    {{productForm.value.choice1}}
+                                                                    <label>Choice1</label>
+                                                                    <input type="radio" id="1" class="radio"
+                                                                        formControlName='answer' value="1">
+                                                                </div>
+                                                                <div class="row">
+                                                                    <label>Choice3</label>
+                                                                    <input type="radio" id="3" class="radio"
+                                                                        formControlName='answer' value="3">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <label>Choice2</label>
+                                                                    <input type="radio" id="2" class="radio"
+                                                                        formControlName='answer' value="2">
+                                                                </div>
+                                                                <div class="row">
+                                                                    <label>Choice4</label>
+                                                                    <input type="radio" id="4" class="radio"
+                                                                        formControlName='answer' value="4">
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6  text-left"
+                                                    *ngIf="(productForm.value.quiz).length > 1">
+                                                    <button type="button" class="btn btn-danger btn-lg"
+                                                        (click)="delQuiz(i_quiz)" style="margin-right: 20px;">Delete
+                                                        Question {{i_quiz+1}}
+                                                        <i class="fa fa-trash-o" aria-hidden="true"
+                                                            style="margin-left:2px"></i></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="this.status" class="alert alert-danger">
+                <div class="text-center" *ngIf="this.status">
+                    Please complete the question or quiz name.
+                </div>
+            </div>
+            <div class="row" [ngSwitch]="statusButton">
+
+                <div class="col-lg-6 text-center" *ngSwitchCase="1">
+                    <button type="button" class="btn btn-info btn-lg" (click)="addQuiz()"
+                        style="width: 100%; height: 100px;">
+                        Add Question {{(productForm.value.quiz).length+1}}
+                        <i class="fa fa-arrow-down btn-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="col-lg-6 text-center" *ngSwitchCase="2">
+                    <button type="button" class="btn btn-warning btn-lg" (click)="pay()"
+                        style="width: 100%; height: 100px;">
+                        Get premium to add more question
+                        <i class="fa fa-money btn-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="col-lg-6 text-center" *ngSwitchCase="3">
+                    <button type="button" class="btn btn-light btn-lg" (click)="addQuiz()"
+                        style="width: 100%; height: 100px;">
+                        <i class="fa fa-product-hunt" aria-hidden="true"></i> Add Question
+                        {{(productForm.value.quiz).length+1}}
+                        <i class="fa fa-arrow-down btn-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="col-lg-6 text-center">
+                    <button type="button" class="btn btn-success btn-lg" (click)="addData()"
+                        style="width: 100%; height: 100px;">
+                        Save
+                        <i class="fa fa-floppy-o btn-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

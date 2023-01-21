@@ -1,0 +1,58 @@
+<div class="container mt-5" style="margin-bottom: 100px;">
+    <div class="col-md-4 text-center" style="margin: auto;">
+        <img id="img2" [src]="this.Allquiz.img || 'https://i.ibb.co/8DV5mBH/unnamed.jpg'" class="img-thumbnail" alt="Your Image">
+    </div>
+
+</div>
+<br>
+<ng-container *ngIf="!isQuizCompleted">
+    <div class="card">
+        <div class="d-flex justify-content-around py-3">
+            <h3>{{this.Allquiz.quizName}}</h3>
+        </div>
+        <div class="d-flex justify-content-around py-3">
+            <div class="score">
+                <h5>{{correctAnswer}} Points</h5>
+                <h5 *ngIf="disabled" style="color: green;">+{{this.point}}</h5>
+            </div>
+            <div class="question-remain">
+                <h5> Qestion {{this.nextQuestion+1}}/{{this.Allquiz.quiz.length}}</h5>
+            </div>
+            <div class="timer">
+                <h5>{{counter}} sec ⏱</h5>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around py-3">
+            <div class="question">
+                <h1>{{this.quiz.question}}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="options" style="margin-bottom: 80px;">
+        <div class="col-lg-12 text-center">
+            <div>
+                <button id="button1" (click)="answer(1)" [ngStyle]="{'background-color': this.color[0]}"
+                    [disabled]="this.disabled">{{this.quiz.choice1}}</button>
+            </div>
+            <div>
+                <button id="button1" (click)="answer(2)" [ngStyle]="{'background-color': this.color[1]}"
+                    [disabled]="this.disabled">{{this.quiz.choice2}}</button>
+            </div>
+            <div>
+                <button id="button1" (click)="answer(3)" [ngStyle]="{'background-color': this.color[2]}"
+                    [disabled]="this.disabled">{{this.quiz.choice3}}</button>
+            </div>
+            <div>
+                <button id="button1" (click)="answer(4)" [ngStyle]="{'background-color': this.color[3]}"
+                    [disabled]="this.disabled">{{this.quiz.choice4}}</button>
+            </div>
+
+        </div>
+    </div>
+
+
+</ng-container>
+
+<ng-container *ngIf="isQuizCompleted">
+    <app-result [correctAnswer]="correctAnswer"></app-result>
+</ng-container>
